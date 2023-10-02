@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Users{
+  userId          String        @id @default(uuid()) // uuid is alphanumeric hence changed from Int to String
+  firstName       String 
+  lastName        String
+  address         String
+  contactNumber   String 
+  email           String         @unique()
+  password        String 
+  createdAt       DateTime       @default(now())
+  role            UserRole
+
+  agency          Agency?  
+  member          AgencyMembers?
+  Properties      Property[]
+
+  @@map(name: "users")
+}
+
+model Agency {
+  agencyId          String      @id @default(uuid())
+  name        String
+  address     String
+  location    String
+  contactNo   String
+  email       String            @unique()
+  ownerName   String
+  agencyOwner       Users       @relation(fields: [agencyOwnerId], references: [userId])
+  agencyOwnerId     String      @unique
+  logoURL     String
+  description String
+  facebook    String?
+  instagram   String?
+  whatsapp    String?
+  youtube     String?
+
+  members     AgencyMembers[]
+
+  Properties    Property[]
+
+  @@map(name: "agency")
+}
+
+model AgencyMembers {
+  
+  memberId     String         @id @default(uuid())
+  
+  agencyIdFk   Agency         @relation(fields: [agency], references: [agencyId])
+  agency       String
+
+  userIdFk     Users          @relation(fields: [user], references: [userId])     
+  user         String         @unique
+
+  role         UserRole
+
+  @@map(name: "agencyMembers")
+}
+
+
+model Property {
+  propertyId            String              @id @default(uuid())
+  propertyType          PropertyType
+  propertyAction        PropertyAction
+  agency                Agency?              @relation(fields: [agencyID], references: [agencyId])
+  agencyID              String?
+  agencyLogo            String?
+  listedByUser          Users               @relation(fields: [listedByUserID], references: [userId])
+  listedByUserID        String
+  listedByRole          UserRole
+  listedByContact       String   
+  address               String
+  area                  Float
+  amenitiesFacilities   Json
+  features              Json
+  price                 Float
+  images                String[]
+  description           String
+  mapLocation           String
+
+  @@map(name: "property")
+}
+
+ enum UserRole{
+    GeneralUser
+    Owner 
+    Manager
+    AssistantManager 
+    Agent 
+}
+
+enum MemberRole{
+    Manager
+    AssistantManager 
+    Agent 
+}
+
+enum PropertyType{
+  Residential
+  Commercial
+}
+ 
+enum PropertyAction{
+  Buy
+  Sell
+  Rent
+}
+
+
+
+// model Users{
+//   userId String @id @default(uuid()) // uuid is alphanumeric hence changed from Int to String
+//   firstName String 
+//   lastName String
+//   address String
+//   contactNumber String 
+//   email String @unique()
+//   password String 
+//   createdAt DateTime @default(now())
+//   role UserRole
+
+//   agency      Agency?  //@relation(fields: [ownerId], references: [agencyId])
+//   // ownerId     String      //@unique
+
+//  // manager     AgencyMembers?
+
+//   member      AgencyMembers[]
+
+//   @@map(name: "users")
+// }
+
