@@ -35,8 +35,8 @@ export class AgencyController {
   //   return this.agencyService.update(+id, updateAgencyDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.agencyService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.agencyService.removeAgency(id);
+  }
 }

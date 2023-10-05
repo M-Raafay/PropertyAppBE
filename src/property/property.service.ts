@@ -4,6 +4,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { RequestUser } from 'src/auth/interface/auth.interface';
 import { MembersService } from 'src/members/members.service';
 import { NotFoundError } from 'rxjs';
+import { selectedFields } from './fieldsFetched/propertyFields';
+import { PropertyAction, PropertyType } from '@prisma/client';
 
 @Injectable()
 export class PropertyService {
@@ -21,7 +23,7 @@ export class PropertyService {
       case 'GeneralUser':{
         const creater = await this.membersService.isUser(requestUser.userId);
         const {userId,contactNumber,email,role} = creater
-        console.log(userId);
+        console.log(userId,contactNumber,email,role);
         
         const property = await this.prismaService.property.create({
           data:{
@@ -70,45 +72,39 @@ export class PropertyService {
     }   
   }
 
-  async findAllProperties() {
-      try{      
-        const allProperties = await this.prismaService.property.findMany({
-        select:{
-          propertyId:true,
-          propertyType:true,
-          propertyAction:true,
-          agency:{
-            select:{
-              agencyId:true,
-              name:true,
-              address:true,
-              location:true,
-              contactNo:true,
-              email:true,
-              description:true,
-            }
-          },
-          listedByUser:{
-            select:{
-              userId:true,
-              firstName:true,
-              lastName:true,
-            }
-          },
-          address:true,
-          area:true,
-          amenitiesFacilities:true,
-          features:true,
-          price:true,
-          images:true,
-          description:true,
-          mapLocation:true,
-        }
-      })
-      if(allProperties.length === 0)
-        throw new NotFoundException('No data found ')
+  async findAllProperties(page:number, pageSize:number,action:PropertyAction, type:PropertyType) {
+    console.log(page,pageSize,type);
+    try{     
+      // const where = {}; 
+      // where['propertyType'] = type;
+      // where['propertyAction'] = action;
 
-      return allProperties;
+      const countPropertiesListed = await this.prismaService.property.count()
+      if(countPropertiesListed < pageSize)
+        return countPropertiesListed;
+
+      const allListedProperties = await this.prismaService.property.findMany({
+      
+      where:{
+        propertyAction:{
+          equals : action,
+          // mode : 'insensitive'
+        },
+        propertyType:{
+          equals : type
+        }
+    
+      },
+      skip:(page-1) * pageSize,
+      take: pageSize,
+
+      select:selectedFields
+
+      })
+      if(allListedProperties.length === 0)
+        throw new NotFoundException('No data found ')
+      const filteredRecords = allListedProperties.length;
+      return {allListedProperties,countPropertiesListed,filteredRecords};
     }catch(error){
       throw error;
     }
@@ -120,37 +116,7 @@ export class PropertyService {
         where:{
           listedByUserID:id
         },
-        select:{
-          propertyId:true,
-          propertyType:true,
-          propertyAction:true,
-          agency:{
-            select:{
-              agencyId:true,
-              name:true,
-              address:true,
-              location:true,
-              contactNo:true,
-              email:true,
-              description:true,
-            }
-          },
-          listedByUser:{
-            select:{
-              userId:true,
-              firstName:true,
-              lastName:true,
-            }
-          },
-          address:true,
-          area:true,
-          amenitiesFacilities:true,
-          features:true,
-          price:true,
-          images:true,
-          description:true,
-          mapLocation:true,
-        }
+        select:selectedFields
       })
 
       if(allProperties.length === 0)
@@ -161,7 +127,6 @@ export class PropertyService {
       throw error;
     }
   }
-  
 
   // findOne(id: number) {
   //   return `This action returns a #${id} property`;
@@ -174,4 +139,5 @@ export class PropertyService {
   // remove(id: number) {
   //   return `This action removes a #${id} property`;
   // }
+
 }

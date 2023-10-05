@@ -100,8 +100,69 @@ export class AgencyService {
   //   return `This action updates a #${id} agency`;
   // }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} agency`;
-  // }
+  async removeAgency(id: string) {
+
+    try{
+
+      return await this.prismaService.$transaction(async(prisma) =>{
+      const isAgency = await this.prismaService.agency.findUnique({
+        where:{
+          agencyId:id
+        }
+      })
+      if(!isAgency)
+        throw new NotFoundException('Agency doesnot exists')
+
+      const userMember = await this.prismaService.agencyMembers.findMany({
+        where:{
+          agency:id
+        },
+        select:{
+          user:true,
+          userIdFk:{
+            select:{
+              userId:true,
+              firstName:true
+            }
+          },
+        }
+      });
+      // if(userMember.length === 0)
+      //   throw new NotFoundException('AgencyMembers doesnot exists')
+
+      const userIdsToDelete = userMember.map((userMember) => userMember.user);      
+      const deleteUserMembers = await this.prismaService.users.deleteMany({
+        where:{
+          userId:{
+            in:userIdsToDelete
+          }
+        }
+      })
+
+      const agency = await this.prismaService.agency.delete({
+        where:{
+          agencyId:id
+        },
+        select:{
+          name:true,
+          agencyOwner:{
+            select:{
+              firstName:true,
+            },
+          },
+        },       
+      });
+      
+      if (!agency)
+        throw new NotFoundException('no Agency');
+    
+     return {deleted:`DELETED \n Agency : ${agency.name} \n Owner : ${agency.agencyOwner.firstName}`};
+    })
+
+    }catch(error){
+      throw error
+    }
+
+  }
 
 }

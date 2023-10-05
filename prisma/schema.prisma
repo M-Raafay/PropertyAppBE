@@ -23,6 +23,13 @@ model Users{
   member          AgencyMembers?
   Properties      Property[]
 
+  // agency          Agency?    @relation(fields: [agencyId], references: [agencyId], onDelete: Cascade)
+  // agencyId        String?
+  
+  // //member          AgencyMembers? @relation(fields: [memberId], references: [memberId], onDelete: Cascade)
+  // memberId        String?
+
+
   @@map(name: "users")
 }
 
@@ -34,7 +41,7 @@ model Agency {
   contactNo   String
   email       String            @unique()
   ownerName   String
-  agencyOwner       Users       @relation(fields: [agencyOwnerId], references: [userId])
+  agencyOwner       Users       @relation(fields: [agencyOwnerId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
   agencyOwnerId     String      @unique
   logoURL     String
   description String
@@ -43,7 +50,7 @@ model Agency {
   whatsapp    String?
   youtube     String?
 
-  members     AgencyMembers[]
+  members     AgencyMembers[] //@relation("agencyMembers")
 
   Properties    Property[]
 
@@ -54,11 +61,14 @@ model AgencyMembers {
   
   memberId     String         @id @default(uuid())
   
-  agencyIdFk   Agency         @relation(fields: [agency], references: [agencyId])
+  agencyIdFk   Agency         @relation(fields: [agency], references: [agencyId], onDelete: Cascade)
   agency       String
 
-  userIdFk     Users          @relation(fields: [user], references: [userId])     
-  user         String         @unique
+  userIdFk     Users          @relation(fields: [user], references: [userId],onDelete: Cascade)     
+  user         String         @unique 
+
+  // belongsToAgency      Users          @relation(fields: [memberAgency], references: [agency],onDelete: Cascade)     
+  // memberAgency         String         @unique 
 
   role         UserRole
 
@@ -70,10 +80,10 @@ model Property {
   propertyId            String              @id @default(uuid())
   propertyType          PropertyType
   propertyAction        PropertyAction
-  agency                Agency?              @relation(fields: [agencyID], references: [agencyId])
+  agency                Agency?              @relation(fields: [agencyID], references: [agencyId], onDelete: Cascade)
   agencyID              String?
   agencyLogo            String?
-  listedByUser          Users               @relation(fields: [listedByUserID], references: [userId])
+  listedByUser          Users               @relation(fields: [listedByUserID], references: [userId], onDelete: Cascade)
   listedByUserID        String
   listedByRole          UserRole
   listedByContact       String   

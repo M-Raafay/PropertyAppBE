@@ -205,7 +205,73 @@ export class MembersService {
 
 
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} member`;
-  // }
+
+
+  async removeMember(id: string) {
+
+    try{
+
+      const isUser = await this.prismaService.users.findUnique({
+        where:{
+          userId:id
+        }
+      })
+      if (!isUser)
+        throw new NotFoundException('user doesnot exists');
+
+      const userRole  = isUser.role;
+
+      switch(userRole){
+
+        case'Owner':{
+          const deleteAgency= await this.prismaService.agency.delete({
+            where:{
+              agencyOwnerId:id
+            }
+          });
+          const deleteOwner = await this.removeUser(id)
+
+          return deleteOwner;
+        }
+
+        default:{
+          const member = await this.prismaService.agencyMembers.delete({ // not necessary because if member is delted using user tabkle than cascade will remove it from agencymembers and their property listed as well
+            where:{
+              user:id
+            }
+          });      
+          if (!member)
+            throw new NotFoundException('member not deleted');
+    
+          const user =  await this.removeUser(id)
+          if (!user)
+            throw new NotFoundException('user not deleted');
+      
+        return {User:user,Member:member};
+        }
+
+      }
+
+    }catch(error){
+      throw error
+    }
+  }
+
+
+  async removeUser(id: string) { /// can delete all user(either generaluser or agencymember. The delete is cascade so the deleted user is also removed form agencymembers and propertylisted by it)
+// in case of user being owner, the user is deleted, the agency is removed and properties listed by that agency, but agency members exists as they are also seperate user(either delete them as well or update their role to General User)
+    try{
+        const user = await this.prismaService.users.delete({
+          where:{
+            userId:id
+          }
+        });
+        if (!user)
+          throw new NotFoundException('user doesnot exists');
+  
+    return {User:user};
+    }catch(error){
+      throw error
+    }
+  }
 }

@@ -40,8 +40,13 @@ export class MembersController {
   //   return this.membersService.update(+id, updateMemberDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.membersService.remove(+id);
-  // }
+  @Delete('deleteMember/:id')
+  deleteMember(@Param('id') id: string) {
+    return this.membersService.removeMember(id);
+  }
+
+  @Delete('deleteUser/:id')
+  deleteUser(@Param('id') id: string) {
+    return this.membersService.removeUser(id);
+  }
 }
