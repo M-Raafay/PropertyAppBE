@@ -27,7 +27,7 @@ export class MembersService {
       const member = await this.prismaService.users.create({
         data:{
         ...createMemberDto,
-        password:hashedPassword
+        //password:hashedPassword
       },
       select:{
           userId: true,

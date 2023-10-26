@@ -166,11 +166,22 @@ export class AuthService {
        throw new NotAcceptableException('OTP is incorrect')
       }
 
+      await this.prismaService.verifyNumber.delete({
+        where:{
+          contactNumber:phoneNumber,
+          otp:usercode
+        }
+      })
+
       const previousUser = await this.prismaService.users.findUnique({
         where:{
           contactNumber:phoneNumber
         }
       })
+
+      if(previousUser.email === null && previousUser.role=== null){
+        return {message:'OTP Verified' }
+      }
 
       if(previousUser){
         const token =  await this.generateToken(previousUser.userId,previousUser.contactNumber, previousUser.email , previousUser.role)
@@ -299,10 +310,6 @@ export class AuthService {
 
     try{
     const {contactNumber, ...userData} = signupDto
-    // const hashedPassword =  await bcrypt.hash(password,10)
-    //   if (!hashedPassword)
-    //     throw new InternalServerErrorException('password encryption issue');
-
     const existingUser = await this.prismaService.users.findUnique({
       where:{
         contactNumber:contactNumber
@@ -312,17 +319,16 @@ export class AuthService {
       throw new NotFoundException('user doesnot exists')
 
     }
+    if(existingUser.email && existingUser.role){
+      throw new ConflictException('User already signed up')
+    }
 
     if (signupDto.profileImage) {
       const avatarUrl = await this.imageService.uploadImage(signupDto.profileImage);
       if (!avatarUrl) throw new BadRequestException("Error uploading image");
 
       userData["profileImage"] = avatarUrl;
-    }
-    console.log(userData);
-    
-
-
+    }    
       const userCreated = await this.prismaService.users.update({
         where:{ contactNumber:contactNumber},
         data:{

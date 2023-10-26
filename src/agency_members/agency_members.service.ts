@@ -119,7 +119,7 @@ export class AgencyMembersService {
       const member = await this.prismaService.users.create({
         data:{
         ...createAgencyMemberDto,
-        password:hashedPassword
+        //password:hashedPassword
       },
       select:{
           userId: true,
