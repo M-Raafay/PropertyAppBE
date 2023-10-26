@@ -10,18 +10,21 @@ datasource db {
 
 model Users{
   userId          String        @id @default(uuid()) // uuid is alphanumeric hence changed from Int to String
-  firstName       String 
-  lastName        String
-  address         String
-  contactNumber   String 
-  email           String         @unique()
-  password        String 
+  firstName       String?        
+  lastName        String?        
+  contactNumber   String          @unique()
+  email           String?         @unique()
   createdAt       DateTime       @default(now())
-  role            UserRole
+  role            UserRole?
 
   agency          Agency?  
   member          AgencyMembers?
   Properties      Property[]
+
+  profileImage    String?
+  isNumberVerified Boolean      @default(false)
+  //isSignedUp       Boolean      @default(false)
+  //otp               String      @default("0000")// remove when twilio is integerated
 
   // agency          Agency?    @relation(fields: [agencyId], references: [agencyId], onDelete: Cascade)
   // agencyId        String?
@@ -97,6 +100,14 @@ model Property {
   mapLocation           String
 
   @@map(name: "property")
+}
+
+model VerifyNumber{
+
+  id                Int      @id @default(autoincrement())
+  contactNumber     String      @unique()
+  otp               String      @default("0000")
+
 }
 
  enum UserRole{

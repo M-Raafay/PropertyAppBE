@@ -144,8 +144,7 @@ export class AgencyMembersService {
   }
 
   // used in addAgencyMember fucntion above for adding aggencyid, userid in AgencyMembers table
-  async addMember(agencyId:string,userId:string,userRole:UserRole){
-    
+  async addMember(agencyId:string,userId:string,userRole:UserRole){ 
       try{
         const addAgencyMember = await this.prismaService.agencyMembers.create({
           data:{

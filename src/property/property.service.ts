@@ -128,6 +128,24 @@ export class PropertyService {
     }
   }
 
+  async findAllPropertiesByAnAgency(id: string) {
+    try{
+      const allProperties = await this.prismaService.property.findMany({
+        where:{
+          agencyID:id
+        },
+        select:selectedFields
+      })
+
+      if(allProperties.length === 0)
+        throw new NotFoundException('No data found for this user : Check Id')
+
+      return allProperties;
+    }catch(error){
+      throw error;
+    }
+  }
+
   // findOne(id: number) {
   //   return `This action returns a #${id} property`;
   // }

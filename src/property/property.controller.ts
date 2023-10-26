@@ -37,6 +37,11 @@ export class PropertyController {
     return this.propertyService.findAllProperties(page,pageSize,action,type);
   }
 
+  @Get('agency/:id')
+  findPropertiesByAnAgency(@Param('id') id: string) {   
+    return this.propertyService.findAllPropertiesByAnAgency(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {   
     return this.propertyService.findAllPropertiesByMember(id);

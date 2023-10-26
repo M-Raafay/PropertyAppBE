@@ -10,13 +10,14 @@ import { MembersModule } from './members/members.module';
 import { AgencyMembersModule } from './agency_members/agency_members.module';
 import { MailerModule } from './mailer/mailer.module';
 import { PropertyModule } from './property/property.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [ConfigModule.forRoot({isGlobal:true}),
     PrismaModule, AuthModule, 
     ForgotPasswordModule, AgencyModule, 
     MembersModule, AgencyMembersModule, 
-    MailerModule, PropertyModule],
+    MailerModule, PropertyModule, ImageModule],
   controllers: [AppController],
   providers: [AppService],
 })

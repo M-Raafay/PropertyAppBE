@@ -12,10 +12,10 @@ async function main() {
       create: {
       firstName: 'Ali',
       lastName: 'Khan',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920281',
       email:'ali@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'GeneralUser'      }
     });
     const user2 = await prisma.users.upsert({
@@ -24,10 +24,10 @@ async function main() {
       create: {
       firstName: 'Maaz',
       lastName: 'Hussain',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920282',
       email:'maaz@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Owner'      }
     });
     const user3 = await prisma.users.upsert({
@@ -36,10 +36,10 @@ async function main() {
       create: {
       firstName: 'Hannan',
       lastName: 'Waseem',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920283',
       email:'hannan@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Manager'      }
     });
     const user4 = await prisma.users.upsert({
@@ -48,10 +48,10 @@ async function main() {
       create: {
       firstName: 'Muhammad',
       lastName: 'Khan',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920284',
       email:'khan@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'AssistantManager'      }
     });
 
@@ -61,10 +61,10 @@ async function main() {
       create: {
       firstName: 'Shoaib',
       lastName: 'Ahmad',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920285',
       email:'shoaib@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Agent'      }
     });
 
@@ -75,10 +75,10 @@ async function main() {
       create: {
       firstName: 'Hayat',
       lastName: 'Awan',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920211',
       email:'hayat@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'GeneralUser'      }
     });
     const user12 = await prisma.users.upsert({
@@ -87,10 +87,10 @@ async function main() {
       create: {
       firstName: 'Ali',
       lastName: 'Hassan',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920212',
       email:'alihassan@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Owner'      }
     });
     const user13 = await prisma.users.upsert({
@@ -99,10 +99,10 @@ async function main() {
       create: {
       firstName: 'Aqib',
       lastName: 'Javaid',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920213',
       email:'aqib@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Manager'      }
     });
     const user14 = await prisma.users.upsert({
@@ -111,10 +111,10 @@ async function main() {
       create: {
       firstName: 'Ahsan',
       lastName: 'Bilal',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920214',
       email:'ahsan@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'AssistantManager'      }
     });
 
@@ -124,10 +124,10 @@ async function main() {
       create: {
       firstName: 'Shan',
       lastName: 'khan',
-      address:"C block,Gulberg,Lahore",
-      contactNumber: '+92 3334920287',
+//      address:"C block,Gulberg,Lahore",
+      contactNumber: '+92 3334920215',
       email:'shan@gmail.com',
-      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
+//      password:'$2b$10$pbYmGX/zken2lkpi5sbIO.61z04vWo2LCmag8rSo0c3LRSLZ2IoC2',
       role: 'Agent'      }
     });
     
