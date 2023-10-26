@@ -7,7 +7,7 @@ async function bootstrap() {
   
   const app = await NestFactory.create(AppModule);
 
-  // const configService = app.get(ConfigService)
+  const configService = app.get(ConfigService)
   // console.log(configService.get('JWT_SECRET'));
   
   app.useGlobalPipes(new ValidationPipe(
@@ -20,6 +20,8 @@ async function bootstrap() {
   }
   )
   )
-  await app.listen(3000);
+
+  await app.listen(Number(configService.get('PORT')) || 3001);   
+
 }
 bootstrap();
