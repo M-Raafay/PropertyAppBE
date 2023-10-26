@@ -31,16 +31,10 @@ export class AuthService {
       // this.client = new Twilio(accountSid, authToken);
     }
 
-  // async sendOtp(userPhoneNumber:string){
-  //   // return this.twilioService.client.messages.create({
-  //   //   body: 'SMS Body, sent to the phone!',
-  //   //   from: "+18595876302",
-  //   //   to: '+92 306 0600282',
-  //   // });
 
   // }
 
-  private service = 'VAc55526bed4160399bc503cb6cf9909fb'
+  private service = this.configService.get<string>('TWILIO_ACCOUNT_Service_SID')
 
   // async sendOtpHardcoded(phoneNumber: string){ // change phoneNumber to contactNumber in controller
   //   try{
@@ -218,6 +212,7 @@ export class AuthService {
   //using twilio 
   async sendOTP(phoneNumber: string){
     const serviceSid = this.service
+    console.log(serviceSid)
     try {
       // return await this.twilioClient.verify.v2.services(serviceSid)
       //   .verifications
@@ -229,7 +224,7 @@ export class AuthService {
         .create({ to: phoneNumber, channel: 'sms' //, customFriendlyName : 'PropertyApp' , customMessage:'Your OTP for Jaidad App is : '
       });
 
-      console.log(sendCode.sendCodeAttempts.length);
+      //console.log(sendCode.sendCodeAttempts.length);
 
       const userCreated = await this.prismaService.users.create({
         data  :{
